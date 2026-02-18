@@ -8,7 +8,6 @@
         :root {
             --primary-color: #00a896;
             --secondary-color: #2c3e50;
-            --accent-color: #ff5722;
             --price-tag: #e67e22;
             --whatsapp-green: #25d366;
             --light-bg: #f4f7f6;
@@ -52,6 +51,7 @@
             border: 1px solid #eee;
         }
 
+        /* Galería Interactiva */
         .gallery {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -66,12 +66,51 @@
             object-fit: cover;
             border-radius: 10px;
             border: 1px solid #eee;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 10;
         }
 
         .gallery img.main {
             grid-column: span 3;
             height: 380px;
             object-fit: contain;
+        }
+
+        /* Ventana Modal (Lightbox) */
+        #modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.2);
+        }
+
+        #modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .content {
@@ -104,12 +143,7 @@
             text-transform: uppercase;
         }
 
-        .about-list {
-            padding-left: 20px;
-            margin: 0;
-            font-size: 0.9rem;
-        }
-
+        .about-list { font-size: 0.9rem; padding-left: 20px; }
         .about-list li { margin-bottom: 10px; }
 
         .buy-btn {
@@ -125,8 +159,6 @@
             transition: 0.3s;
         }
 
-        .buy-btn:hover { opacity: 0.9; transform: translateY(-2px); }
-
         .contact-footer {
             text-align: center;
             padding: 3rem;
@@ -136,8 +168,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
 
-        footer { text-align: center; padding: 4rem 1rem; color: #777; font-size: 0.9rem; }
-
         @media (max-width: 600px) {
             .products-grid { grid-template-columns: 1fr; }
             .gallery img.main { height: 280px; }
@@ -146,66 +176,61 @@
 </head>
 <body>
 
+<div id="modal" onclick="this.style.display='none'">
+    <span id="modal-close">&times;</span>
+    <img id="modal-img" src="">
+</div>
+
 <header>
     <h1>Seguridad para tu Hogar</h1>
-    <p>Tecnología avanzada para el cuidado de tu familia</p>
+    <p>Haz clic en las imágenes para ver detalles en alta resolución</p>
 </header>
 
 <div class="container">
     <div class="products-grid">
-        
         <article class="product-card">
             <div class="gallery">
-                <img src="10.jpg" alt="Cámara 2K" class="main">
-                <img src="11.jpg" alt="11"><img src="12.jpg" alt="12"><img src="13.jpg" alt="13">
-                <img src="14.jpg" alt="14"><img src="15.jpg" alt="15">
+                <img src="10.jpg" class="main" onclick="openModal(this.src)" alt="Principal 2K">
+                <img src="11.jpg" onclick="openModal(this.src)"><img src="12.jpg" onclick="openModal(this.src)">
+                <img src="13.jpg" onclick="openModal(this.src)"><img src="14.jpg" onclick="openModal(this.src)">
+                <img src="15.jpg" onclick="openModal(this.src)">
             </div>
             <div class="content">
                 <span class="price-tag">$60.000</span>
                 <h2>Cámara Interior 2K [5G y 2.4G]</h2>
-                
                 <div class="about-section">
                     <h3>Sobre este artículo</h3>
                     <ul class="about-list">
                         <li><strong>Almacenamiento:</strong> 1 mes gratuito en la nube incluido o microSD hasta 256GB.</li>
-                        <li><strong>WiFi Doble Banda:</strong> Conexión 5GHz y 2.4GHz para transmisión fluida.</li>
-                        <li><strong>Resolución Ultra 2K:</strong> Video nítido con zoom digital 3X y visión nocturna de 30 pies.</li>
-                        <li><strong>Audio & Alexa:</strong> Bidireccional con micrófono integrado y compatible con Alexa.</li>
-                        <li><strong>Detección IA:</strong> Alertas instantáneas al celular y sirena de seguridad integrada.</li>
-                        <li><strong>Instalación:</strong> Diseño compacto y alimentación USB Tipo C para montaje fácil.</li>
+                        <li><strong>WiFi Doble Banda:</strong> Conexión 5GHz y 2.4GHz.</li>
+                        <li><strong>Resolución Ultra 2K:</strong> Zoom digital 3X y visión nocturna de 30 pies.</li>
                     </ul>
                 </div>
-                
-                <a href="https://wa.me/573138706180?text=Hola,%20me%20interesa%20la%20camara%20Interior%202K" class="buy-btn">Comprar vía WhatsApp</a>
+                <a href="https://wa.me/573138706180" class="buy-btn">Comprar vía WhatsApp</a>
             </div>
         </article>
 
         <article class="product-card">
             <div class="gallery">
-                <img src="1.jpg" alt="Cámara 3K" class="main">
-                <img src="2.jpg" alt="2"><img src="3.jpg" alt="3"><img src="4.jpg" alt="4">
-                <img src="5.jpg" alt="5"><img src="6.jpg" alt="6">
+                <img src="1.jpg" class="main" onclick="openModal(this.src)" alt="Principal 3K">
+                <img src="2.jpg" onclick="openModal(this.src)"><img src="3.jpg" onclick="openModal(this.src)">
+                <img src="4.jpg" onclick="openModal(this.src)"><img src="5.jpg" onclick="openModal(this.src)">
+                <img src="6.jpg" onclick="openModal(this.src)">
             </div>
             <div class="content">
                 <span class="price-tag">$80.000</span>
                 <h2>Cámara Pro 3K Panorámica 360°</h2>
-                
                 <div class="about-section">
                     <h3>Sobre este artículo</h3>
                     <ul class="about-list">
-                        <li><strong>Visión 3K Ultra HD:</strong> Resolución de 2880x1620p para detalles precisos día y noche.</li>
-                        <li><strong>WiFi & Voz:</strong> Doble banda (2.4G/5G) y control por comandos de voz (Alexa/Google).</li>
-                        <li><strong>Detección Inteligente:</strong> IA que distingue personas y mascotas con seguimiento automático.</li>
-                        <li><strong>Cobertura 360°:</strong> Giro horizontal de 345° e inclinación de 62° desde la App.</li>
-                        <li><strong>Alertas Reales:</strong> Sirena disuasoria y audio bidireccional para comunicación directa.</li>
-                        <li><strong>Privacidad:</strong> Almacenamiento flexible (SD/Nube) con cifrado avanzado de datos.</li>
+                        <li><strong>Visión 3K:</strong> Resolución 2880x1620p para detalles día y noche.</li>
+                        <li><strong>Cobertura 360°:</strong> Giro 345°H y 62°V controlado desde la App.</li>
+                        <li><strong>Detección IA:</strong> Seguimiento automático de personas y mascotas.</li>
                     </ul>
                 </div>
-                
-                <a href="https://wa.me/573138706180?text=Hola,%20me%20interesa%20la%20camara%20Pro%203K" class="buy-btn" style="background: var(--secondary-color);">Comprar vía WhatsApp</a>
+                <a href="https://wa.me/573138706180" class="buy-btn" style="background: var(--secondary-color);">Comprar vía WhatsApp</a>
             </div>
         </article>
-
     </div>
 
     <div class="contact-footer">
@@ -216,9 +241,12 @@
     </div>
 </div>
 
-<footer>
-    © 2026 Alaga Security Solutions - Expertos en Vigilancia Inteligente
-</footer>
+<script>
+    function openModal(src) {
+        document.getElementById('modal-img').src = src;
+        document.getElementById('modal').style.display = 'flex';
+    }
+</script>
 
 </body>
 </html>
